@@ -23,14 +23,19 @@ if [[ ! $1 ]]; then
   echo "[*] Need ip to check"
   exit
 fi
-
+if [[ ! $apiKey ]]; then
+  echo "[*]Need API Key to run query"
+  exit
+fi
 #Constants
 baseUrl="https://api.ipgeolocation.io/ipgeo?"
 IP=$1
-FIELDS="city,state_prov,country_name"
+FIELDS="city,state_prov,country_name,latitude,longitude"
 GEOIP="$baseUrl";GEOIP+="apiKey=$apiKey&ip=$IP&fields=$FIELDS&format=json"
 
 query=$(curl -s $GEOIP)
-whoisit=$(whois $IP | grep "NetRange\|CIDR\|NetName\|City\|StateProv\|Country\|OrgTechName\|OrgTechHandle\|inet\|descr")
+whoisit=$(whois $IP | grep "OrgName\|NetRange\|CIDR\|NetName\|City\|StateProv\|Country\|OrgTechName\|OrgTechHandle\|inet\|descr")
 echo $query | jq '.'
+echo PTR: $(host $IP)
+printf '\n\n'
 echo "$whoisit"

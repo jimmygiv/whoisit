@@ -1,3 +1,5 @@
+UPDATE: Added grabbing PTR record for the IP, and checking for API key to ipgeolocation
+
 Basic script to pull geoip data from ipgeolocation.io. It uses the API, so you will need an API key to use this. The API is free, you just need an account. Edit variable apiKey to have your key value.
 
 Sample Command: whoisit 8.8.8.8
