@@ -16,8 +16,20 @@ Sample Output:
   "city": "Mountain View",
   "state_prov": "California",
   "country_name": "United States",
-  "latitude": "37.42290",
-  "longitude": "-122.08500"
+  "latitude": "37.42240",
+  "longitude": "-122.08421"
+}
+PTR: 8.8.8.8.in-addr.arpa domain name pointer dns.google.
+
+Services:
+{
+  "ip": "8.8.8.8",
+  "https443": {
+    "title": "301 Moved",
+    "server": "sffe",
+    "cn": "dns.google",
+    "o": "Google LLC"
+  }
 }
 NetRange:       8.0.0.0 - 8.127.255.255
 CIDR:           8.0.0.0/9
