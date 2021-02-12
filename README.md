@@ -1,27 +1,22 @@
-UPDATE: Added grabbing PTR record for the IP, and checking for API key to ipgeolocation
-
-Basic script to pull geoip data from ipgeolocation.io. It uses the API, so you will need an API key to use this. The API is free, you just need an account. Edit variable apiKey to have your key value.
-
-Sample Command: whoisit 8.8.8.8
-
-Sample Output:
-  _       ____          ____     ______
+This script pulls geoip data from ipwhois.app, service data from hackertarget, and metadata from whois. It's a quick a dirty way to gather passive information on a target without requiring any api keys.
+EXAMPLE: whoisit 8.8.8.8
+ _       ____          ____     ______
  | |     / / /_  ____  /  _/____/  _/ /  
  | | /| / / __ \/ __ \ / // ___// // __/ 
  | |/ |/ / / / / /_/ // /(__  )/ // /_   
  |__/|__/_/ /_/\____/___/____/___/\__/   
 
- {
-  "ip": "8.8.8.8",
-  "city": "Mountain View",
-  "state_prov": "California",
-  "country_name": "United States",
-  "latitude": "37.42240",
-  "longitude": "-122.08421"
-}
+
 PTR: 8.8.8.8.in-addr.arpa domain name pointer dns.google.
 
-Services:
+{
+  "ip": "8.8.8.8",
+  "country": "United States",
+  "region": "Virginia",
+  "city": "Ashburn",
+  "latitude": "39.0437567",
+  "longitude": "-77.4874416"
+}
 {
   "ip": "8.8.8.8",
   "https443": {

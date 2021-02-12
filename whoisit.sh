@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 #Add ACII flare :)
-apiKey='dd1c9c97359c4c30aa3294d839f87320'
 banner=''
 banner+=' _       ____          ____     ______\n'
 banner+=' | |     / / /_  ____  /  _/____/  _/ /  \n'
@@ -25,36 +24,24 @@ done
 if [[ ! $1 ]]; then
   echo "[*] Need ip to check"
   exit
-fi
-if [[ ! $apiKey ]]; then
-  echo " [*]Need API Key to run query"
+elif [[ ! $(echo $1 | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b") ]]; then
+  echo "[*] $1 is not a valid ip"
   exit
 fi
-
 #--------------------------------------------------------------------------------------------------------------------#
 #Web requests#
-baseUrl="https://api.ipgeolocation.io/ipgeo?"
-IP=$1
-FIELDS="city,state_prov,country_name,latitude,longitude"
-GEOIP="$baseUrl";GEOIP+="apiKey=$apiKey&ip=$IP&fields=$FIELDS&format=json"
-query=$(curl -s $GEOIP)
-ht_request=$(curl -s "https://api.hackertarget.com/bannerlookup/?q=$IP")
-whoisit=$(whois $IP | grep "OrgName\|NetRange\|CIDR\|NetName\|City\|StateProv\|Country\|OrgTechName\|OrgTechHandle\|inet\|descr")
+geo=$(curl -s "https://ipwhois.app/json/$1?objects=ip,latitude,longitude,city,region,country")
+ht_request=$(curl -s "https://api.hackertarget.com/bannerlookup/?q=$1")
+whois=$(whois $1 | grep "OrgName\|NetRange\|CIDR\|NetName\|City\|StateProv\|Country\|OrgTechName\|OrgTechHandle\|inet\|descr")
 #--------------------------------------------------------------------------------------------------------------------#
-
+#Working around weird api stuff for ht
 if [[ $(echo "$ht_request" | jq -s '.[1]') != "null" ]]; then
   ht=$(echo "$ht_request" | jq -s '.[0]')
 else
   ht=$ht_request
 fi
-
-
 #--------------------------------------------------------------------------------------------------------------------#
 #Printing Information
-
-echo $query | jq '.'
-echo PTR: $(host $IP)
-printf '\n'
-echo "Services:"
-echo $ht | jq '.'
-echo "$whoisit"
+echo $'\n'"PTR: $(host $1)"$'\n'
+echo "$geo $ht" | jq '.'
+echo "$whois"
